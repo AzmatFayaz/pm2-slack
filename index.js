@@ -162,6 +162,7 @@ pm2.launchBus(function(err, bus) {
 
             // If it is instance of Error, use it. If type is unknown, stringify it.
             const description = (data.data && data.data.message) ? (data.data.code || '') + data.data.message :  JSON.stringify(data.data);
+           if (description.includes("ER_LOCK_DEADLOCK")) { return; }
             slackUrlRouter.addMessage({
                 name: parseProcessName(data.process),
                 event: 'exception',
