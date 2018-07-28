@@ -133,6 +133,7 @@ pm2.launchBus(function(err, bus) {
             if (data.process.name === 'pm2-slack') { return; } // Ignore messages of own module.
 
             const parsedLog = parseIncommingLog(data.data);
+            if (parsedLog.description.includes("ER_LOCK_DEADLOCK")) { return; }
             slackUrlRouter.addMessage({
                 name: parseProcessName(data.process),
                 event: 'error',
